@@ -1,16 +1,16 @@
-services :
-  db:
+services:
+  postgres:
     image: postgres:17-alpine
-    ports:
-      - "5433:5433"
+    container_name: database_psql
+    restart: always
     environment:
-      POSTGRES_USER: user1
+      POSTGRES_USER: admin
       POSTGRES_PASSWORD: changeme
       POSTGRES_DB: task_manager
-  admin:
-    image: adminer
-    restart: always
-    depends_on: 
-      - db
     ports:
-      - 8080:8080
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
